@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">Signal — Cloud SLA Monitor</title>
+  <desc id="desc">A black banner with vibrant purple and teal telemetry lines. CCV mini project. Reliability, performance, and incidents in one workspace.</desc>
+  <defs>
+    <linearGradient id="signal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#a78bfa"/><stop offset=".55" stop-color="#22d3ee"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#6d28d9" stop-opacity=".25"/><stop offset="1" stop-color="#6d28d9" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".04"/></pattern>
+  </defs>
+  <rect width="1280" height="360" rx="24" fill="#000"/>
+  <rect width="1280" height="360" rx="24" fill="url(#grid)"/>
+  <ellipse cx="1050" cy="170" rx="360" ry="250" fill="url(#glow)"/>
+  <rect x=".5" y=".5" width="1279" height="359" rx="24" fill="none" stroke="#292929"/>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <rect x="48" y="35" width="232" height="30" rx="15" fill="#171123" stroke="#49316f"/>
+    <circle cx="65" cy="50" r="4" fill="#a78bfa"/>
+    <text x="79" y="55" fill="#d6c8ff" font-size="12" letter-spacing="2">CCV · MINI PROJECT</text>
+    <text x="48" y="132" fill="#fff" font-size="64" font-weight="750" letter-spacing="-3">signal<tspan fill="#a78bfa">.</tspan></text>
+    <text x="50" y="181" fill="#fff" font-size="30" font-weight="600">Cloud SLA Monitor</text>
+    <text x="50" y="218" fill="#a8a8b3" font-size="18">Reliability. Performance. Incidents. One workspace.</text>
+    <g font-size="13" fill="#d1d1da">
+      <rect x="48" y="264" width="90" height="34" rx="8" fill="#111" stroke="#303030"/><text x="70" y="286">Python</text>
+      <rect x="148" y="264" width="106" height="34" rx="8" fill="#111" stroke="#303030"/><text x="166" y="286">Streamlit</text>
+      <rect x="264" y="264" width="84" height="34" rx="8" fill="#111" stroke="#303030"/><text x="286" y="286">Plotly</text>
+      <rect x="358" y="264" width="162" height="34" rx="8" fill="#111" stroke="#303030"/><text x="376" y="286">Google Cloud · optional</text>
+    </g>
+    <text x="748" y="71" fill="#a1a1aa" font-size="12" letter-spacing="3">FOUR SIGNALS. ONE CLEAR VIEW.</text>
+    <g stroke="#fff" stroke-opacity=".08"><path d="M740 130H1220M740 190H1220M740 250H1220"/><path d="M800 100V285M920 100V285M1040 100V285M1160 100V285"/></g>
+    <path d="M740 232L775 232L798 205L821 220L850 220L870 128L893 260L918 178L946 203L978 203L1005 161L1030 182L1060 182L1080 125L1102 225L1128 191L1155 191L1185 154L1220 154" fill="none" stroke="url(#signal)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="1220" cy="154" r="6" fill="#34d399"/>
+    <text x="746" y="319" fill="#8d81a8" font-size="12" letter-spacing="2">UPTIME</text><text x="850" y="319" fill="#8d81a8" font-size="12" letter-spacing="2">LATENCY</text><text x="972" y="319" fill="#8d81a8" font-size="12" letter-spacing="2">ERRORS</text><text x="1081" y="319" fill="#8d81a8" font-size="12" letter-spacing="2">AVAILABILITY</text>
+  </g>
+</svg>

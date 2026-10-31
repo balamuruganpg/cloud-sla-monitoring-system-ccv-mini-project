@@ -1,6 +1,8 @@
+![Signal — Cloud SLA Monitor: CCV mini project](assets/readme-banner.svg)
+
 # Signal · Cloud SLA Monitor
 
-**Cloud reliability, performance, and incidents in one interactive workspace.**
+<p align="center"><strong>Observe the signals. Investigate the breaches. Understand your SLA.</strong></p>
 
 Signal turns cloud telemetry into a clear view of uptime, response time, error
 rate, and availability. Explore trends, investigate threshold breaches, and
@@ -13,45 +15,34 @@ Cloud Monitoring source.
 Developed as a **mini project for U23CS702 — Cloud Computing Virtualization (CCV)**
 at **Nehru Institute of Technology**.
 
-[Dashboard preview](#dashboard-preview) · [Quick start](#quick-start) ·
-[Features](#features) · [Algorithm](#how-the-analysis-works) ·
-[Google Cloud setup](#google-cloud-setup-optional)
+[Full dashboard](#full-dashboard-screenshot) · [Quick start](#quick-start) ·
+[Features](#features) · [Architecture](#system-architecture) ·
+[Algorithm](#how-the-analysis-works) · [Project report](#mini-project-details)
 
-## Mini project details
+| Four SLA metrics | Three workspaces | Two telemetry sources | Two native themes |
+| :---: | :---: | :---: | :---: |
+| Uptime · Latency · Errors · Availability | Overview · Incidents · Data & guide | Simulation · Optional Live GCP | Light · Pure black |
 
-| Detail | Information |
-| --- | --- |
-| Student | BALAMURUGAN P G |
-| Register number | 721023104019 |
-| Institution | Nehru Institute of Technology |
-| Course | U23CS702 — Cloud Computing Virtualization |
-| Semester / class | VII Semester / 4 CSE A |
-| Course instructor | Dr S Pathur Nisha |
+## Full dashboard screenshot
 
-Project report: [PDF](output/report/CCV_Mini_Project_Report_BALAMURUGAN_P_G.pdf)
-· [Word document](output/report/CCV_Mini_Project_Report_BALAMURUGAN_P_G.docx).
+The complete dashboard, captured in the light theme: metric cards and sparklines,
+interactive telemetry, reliability radar, incident pulse, request traffic, error
+budget, breach heatmap, latency distribution, and diagnostic observations.
 
-## Dashboard preview
+[![Full Signal dashboard — complete light-theme screenshot](screenshot/screencapture-localhost-8501-2026-10-31-12_31_08.png)](screenshot/screencapture-localhost-8501-2026-10-31-12_31_08.png)
+
+**Click the screenshot to open the original 2880 × 6094 image.** The capture uses
+simulated telemetry; the displayed values reflect its snapshot and settings.
+
+### Light & pure black themes
 
 | Light theme | Pure black dark theme |
 | --- | --- |
 | ![Light dashboard with metric cards, sparklines, telemetry explorer, and reliability radar](artifacts/dashboard-light-v2.jpg) | ![Pure black dashboard with colored metric accents and interactive charts](artifacts/dashboard-black-v2.jpg) |
 
-<details>
-<summary><strong>View the full dashboard screenshot</strong></summary>
-
-The full light-theme capture includes the telemetry explorer, reliability radar,
-incident pulse, request traffic, availability error budget, breach heatmap,
-latency distribution, and diagnostic observations.
-
-[Open the original full-resolution screenshot](screenshot/screencapture-localhost-8501-2026-10-31-12_31_08.png).
-
-![Full Signal dashboard in light theme, from the overview and metric cards through the charts and diagnostics](screenshot/screencapture-localhost-8501-2026-10-31-12_31_08.png)
-
-</details>
-
-Screenshots show simulated telemetry. Values change with the selected snapshot
-and settings.
+The appearance controls sit above the dashboard. Dark mode uses a **#000000**
+page and sidebar with neutral black cards; light mode uses white cards and a
+soft background. Theme switching preserves the current snapshot and controls.
 
 ## Quick start
 
@@ -61,13 +52,16 @@ No Google Cloud account is needed for simulation.
 From the project folder, run these commands in PowerShell:
 
 ```powershell
+git clone https://github.com/balamuruganpg/cloud-sla-monitoring-system-ccv-mini-project.git
+cd cloud-sla-monitoring-system-ccv-mini-project
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-Open [http://localhost:8501](http://localhost:8501). If the project environment
-already exists, skip the first command. Launch with its Python executable to
+Open [http://localhost:8501](http://localhost:8501). If you already have the
+project, start from its folder and skip the clone commands. If `.venv` already
+exists, skip its creation. Launch with its Python executable to
 use the installed dependencies instead of an older global Streamlit version.
 
 ### Try the dashboard
@@ -84,6 +78,15 @@ to update the observation window; collection does not run continuously in the
 background.
 
 ## Features
+
+### A connected reliability workspace
+
+**Overview** brings the latest service readings and historical compliance
+together. **Incidents** turns failed checks into searchable, exportable records.
+**Data & guide** exposes the source samples and explains the calculations for
+demonstrations and review.
+
+### Beyond a collection of charts
 
 | Area | What you can explore |
 | --- | --- |
@@ -102,6 +105,38 @@ The sidebar offers 24-hour, seven-day, and 30-day windows, plus custom dates
 covering up to 60 calendar days. Sampling resolution adapts to the window.
 Timestamps in the dashboard and exports use **Asia/Kolkata (IST)**.
 
+### Visual analytics in action
+
+![Dashboard analytics with time-series exploration, reliability radar, incident pulse, and request traffic](artifacts/dashboard-visuals-v2.jpg)
+
+Hover for exact readings, drag to zoom into a time range, or compare four
+metrics in separate plots with their own units. The radar uses a 0–100 compliance
+scale; the incident pulse makes groups of simultaneous breaches easy to spot.
+
+## System architecture
+
+```mermaid
+flowchart TD
+    SIM["Seeded telemetry simulator"] --> SNAP["Selected telemetry snapshot"]
+    GCP["Google Cloud Monitoring · read only"] --> ALIGN["Timestamp alignment and coverage checks"]
+    ALIGN -->|Complete telemetry| SNAP
+    ALIGN -->|Unavailable or incomplete| FALLBACK["Clearly labeled simulation fallback"]
+    FALLBACK --> SNAP
+    TARGETS["User-defined SLA thresholds"] --> ANALYZE["Threshold evaluation"]
+    SNAP --> ANALYZE
+    ANALYZE --> SCORES["Per-metric compliance and composite score"]
+    ANALYZE --> INCIDENTS["Violations, severity, and diagnostic rules"]
+    SNAP --> VISUALS["Trends, traffic, budget, and distributions"]
+    SCORES --> UI["Streamlit reliability workspace"]
+    INCIDENTS --> UI
+    VISUALS --> UI
+    UI --> EXPORT["Filtered incidents and raw telemetry · CSV"]
+```
+
+Source adapters provide the samples, the analyzer evaluates the targets, and
+the dashboard presents the results. Changing a threshold re-evaluates the same
+snapshot so comparisons remain meaningful.
+
 ## How the analysis works
 
 The core algorithm is **threshold-based SLA evaluation**. Each sampled reading
@@ -119,6 +154,11 @@ Metric compliance (%) = passing samples / total samples × 100
 Composite score (%)  = mean of the four metric compliance percentages
 Violation deviation  = absolute difference between reading and target
 ```
+
+**Example:** if 285 of 288 uptime samples meet the target, uptime compliance is
+**98.96%**. If all four compliance scores are 98.96%, 100%, 97.22%, and 100%,
+the composite is **99.05%**. This measures passing checks across the selected
+window, separately from the latest reading.
 
 Each failing metric reading becomes a violation record. Records are sorted by
 timestamp and assigned a severity from their absolute deviation:
@@ -169,6 +209,31 @@ project and is not covered by local UI verification.
 See the [Google Cloud Monitoring metric catalog](https://docs.cloud.google.com/monitoring/api/metrics_gcp)
 for metric definitions.
 
+## Mini project details
+
+**Cloud Computing Virtualization · U23CS702 · Nehru Institute of Technology**
+
+| Detail | Information |
+| --- | --- |
+| Project | Signal — Cloud SLA Monitoring System |
+| Student | BALAMURUGAN P G |
+| Register number | 721023104019 |
+| Institution | Nehru Institute of Technology |
+| Course | U23CS702 — Cloud Computing Virtualization |
+| Semester / class | VII Semester / 4 CSE A |
+| Course instructor | Dr S Pathur Nisha |
+
+### Report & outputs
+
+| Artifact | Open |
+| --- | --- |
+| Final project report | [PDF](output/report/CCV_Mini_Project_Report_BALAMURUGAN_P_G.pdf) |
+| Editable project report | [Word document](output/report/CCV_Mini_Project_Report_BALAMURUGAN_P_G.docx) |
+| Complete dashboard output | [Full-resolution screenshot](screenshot/screencapture-localhost-8501-2026-10-31-12_31_08.png) |
+
+The report covers the introduction, literature survey, proposed system,
+conclusion, references, and dashboard output screenshots.
+
 ## Project structure
 
 | Path | Purpose |
@@ -185,6 +250,7 @@ for metric definitions.
 | [`tests/`](tests/) | Calculation, ingestion, theme, and Streamlit interaction checks |
 | [`screenshot/`](screenshot/) | Full dashboard capture |
 | [`artifacts/`](artifacts/) | Dashboard previews and other local artifacts |
+| [`assets/`](assets/) | Repository presentation artwork |
 
 The stack uses **Python, Streamlit, pandas, NumPy, Plotly, and Google Cloud
 Monitoring**. Dependencies are listed in [`requirements.txt`](requirements.txt).
