@@ -1,3 +1,5 @@
+<p align="center"><strong>🚀 <a href="https://cloud-sla-monitoring-system.streamlit.app/">OPEN THE LIVE DASHBOARD →</a></strong><br>Hosted on Streamlit Community Cloud</p>
+
 ![Signal — Cloud SLA Monitor: CCV mini project](assets/readme-banner.svg)
 
 # Signal · Cloud SLA Monitor
@@ -15,6 +17,7 @@ Cloud Monitoring source.
 Developed as a **mini project for U23CS702 — Cloud Computing Virtualization (CCV)**
 at **Nehru Institute of Technology**.
 
+[Live app](https://cloud-sla-monitoring-system.streamlit.app/) ·
 [Full dashboard](#full-dashboard-screenshot) · [Quick start](#quick-start) ·
 [Features](#features) · [Architecture](#system-architecture) ·
 [Algorithm](#how-the-analysis-works) · [Project report](#mini-project-details)
